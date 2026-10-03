@@ -23,6 +23,7 @@ Greeter is a small, public HTTP API: a single endpoint that takes a name and ret
 - When the `name` query parameter is missing or empty, the response falls back to a generic greeting (e.g. "Hello, World!") rather than an error.
 - Audience: external developers/public API consumers — the API is reachable outside the organization. *assumed*
 - Authentication: the endpoint is open and requires no sign-in or API key, consistent with a simple public greeting utility. *assumed*
+- The `name` value is accepted as free-form text with no length or character restrictions, and is echoed back in the greeting as-is. *assumed*
 - Language/runtime: Go, per the organization's service default.
 
 ## Out of Scope
