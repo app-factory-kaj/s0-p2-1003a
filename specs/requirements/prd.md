@@ -2,7 +2,7 @@
 
 ## Problem Statement
 
-Developers building applications or integrations that need a simple, reliable way to greet a named user programmatically currently have to stand up their own trivial greeting logic, or skip the niceties of a proper greeting feature altogether because even a one-line text response needs a hosted, documented endpoint.
+Developers building applications or integrations that need a simple, reliable way to greet a named user programmatically currently have to stand up their own trivial greeting logic, or skip the niceties of a proper greeting feature altogether because even a one-line text response needs a hosted, documented endpoint. S0 marker s0-p2-1003a.
 
 ## Solution
 
