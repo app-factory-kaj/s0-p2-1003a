@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-03T00:00:00Z",
+  "commit": "fa0b54dee67b9bfc24ae3042f428339e61296c2a",
+  "baseUrl": "http://development-default.openchoreoapis.localhost:19080/s0-p2-1003a-greeter-http",
+  "isolation": "greeter is a stateless read-only GET endpoint with no persisted state and no container to create; each scenario asserts only on the HTTP response to its own request",
+  "scenarios": [
+    {
+      "feature": "Greeting",
+      "featureFile": "specs/validation/acceptance/greeting.feature",
+      "line": 6,
+      "rule": "A request naming a person receives a greeting addressed to them",
+      "scenario": "Greeting a named person",
+      "tags": ["@story-1"],
+      "outcome": "passed",
+      "steps": [
+        { "text": "the greeter API is available", "keyword": "Given",
+          "command": "curl -s -o /dev/null -w '%{http_code}' \"$BASE/hello\"",
+          "exit": 0, "observed": "200" },
+        { "text": "an API Consumer calls GET /hello with name \"Alice\"", "keyword": "When",
+          "command": "curl -s -w '\\nHTTP_STATUS:%{http_code}' \"$BASE/hello?name=Alice\"",
+          "observed": "no UI exists for this component (API-only service); the request was made directly against the deployed HTTP endpoint named in the validation context" },
+        { "text": "the response is a JSON greeting addressed to \"Alice\"", "keyword": "Then",
+          "command": "curl -s \"$BASE/hello?name=Alice\"",
+          "exit": 0, "observed": "{\"name\":\"Alice\",\"message\":\"Hello, Alice!\"} — HTTP 200, message addressed to Alice" }
+      ],
+      "evidence": {
+        "network": [{ "method": "GET", "url": "/hello?name=Alice", "status": 200 }]
+      }
+    },
+    {
+      "feature": "Greeting",
+      "featureFile": "specs/validation/acceptance/greeting.feature",
+      "line": 14,
+      "rule": "A request with no name still receives a generic greeting rather than an error",
+      "scenario": "Calling without a name",
+      "tags": ["@story-2"],
+      "outcome": "passed",
+      "steps": [
+        { "text": "the greeter API is available", "keyword": "Given",
+          "command": "curl -s -o /dev/null -w '%{http_code}' \"$BASE/hello\"",
+          "exit": 0, "observed": "200" },
+        { "text": "an API Consumer calls GET /hello with no name", "keyword": "When",
+          "command": "curl -s -w '\\nHTTP_STATUS:%{http_code}' \"$BASE/hello\"",
+          "observed": "no UI exists for this component (API-only service); the request was made directly against the deployed HTTP endpoint named in the validation context" },
+        { "text": "the response is a generic JSON greeting", "keyword": "Then",
+          "command": "curl -s \"$BASE/hello\"",
+          "exit": 0, "observed": "{\"message\":\"Hello, World!\"} — HTTP 200, generic greeting, no error" }
+      ],
+      "evidence": {
+        "network": [{ "method": "GET", "url": "/hello", "status": 200 }]
+      }
+    },
+    {
+      "feature": "Greeting",
+      "featureFile": "specs/validation/acceptance/greeting.feature",
+      "line": 19,
+      "rule": "A request with no name still receives a generic greeting rather than an error",
+      "scenario": "Calling with an empty name",
+      "tags": ["@story-2"],
+      "outcome": "passed",
+      "steps": [
+        { "text": "the greeter API is available", "keyword": "Given",
+          "command": "curl -s -o /dev/null -w '%{http_code}' \"$BASE/hello\"",
+          "exit": 0, "observed": "200" },
+        { "text": "an API Consumer calls GET /hello with name \"\"", "keyword": "When",
+          "command": "curl -s -w '\\nHTTP_STATUS:%{http_code}' \"$BASE/hello?name=\"",
+          "observed": "no UI exists for this component (API-only service); the request was made directly against the deployed HTTP endpoint named in the validation context" },
+        { "text": "the response is a generic JSON greeting", "keyword": "Then",
+          "command": "curl -s \"$BASE/hello?name=\"",
+          "exit": 0, "observed": "{\"message\":\"Hello, World!\"} — HTTP 200, generic greeting, no error" }
+      ],
+      "evidence": {
+        "network": [{ "method": "GET", "url": "/hello?name=", "status": 200 }]
+      }
+    }
+  ]
+}
