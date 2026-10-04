@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-03T00:00:00Z",
-  "commit": "fa0b54dee67b9bfc24ae3042f428339e61296c2a",
+  "generatedAt": "2026-10-04T04:23:18Z",
+  "commit": "f6cff6109d0ceb72178f9abe35a33a6caafed8cf",
   "baseUrl": "http://development-default.openchoreoapis.localhost:19080/s0-p2-1003a-greeter-http",
   "isolation": "greeter is a stateless read-only GET endpoint with no persisted state and no container to create; each scenario asserts only on the HTTP response to its own request",
   "scenarios": [
@@ -15,14 +15,14 @@
       "outcome": "passed",
       "steps": [
         { "text": "the greeter API is available", "keyword": "Given",
-          "command": "curl -s -o /dev/null -w '%{http_code}' \"$BASE/hello\"",
-          "exit": 0, "observed": "200" },
+          "command": "curl -sS -i \"$BASE/hello\"",
+          "exit": 0, "observed": "HTTP/1.1 200 OK" },
         { "text": "an API Consumer calls GET /hello with name \"Alice\"", "keyword": "When",
-          "command": "curl -s -w '\\nHTTP_STATUS:%{http_code}' \"$BASE/hello?name=Alice\"",
+          "command": "curl -sS -i \"$BASE/hello?name=Alice\"",
           "observed": "no UI exists for this component (API-only service); the request was made directly against the deployed HTTP endpoint named in the validation context" },
         { "text": "the response is a JSON greeting addressed to \"Alice\"", "keyword": "Then",
-          "command": "curl -s \"$BASE/hello?name=Alice\"",
-          "exit": 0, "observed": "{\"name\":\"Alice\",\"message\":\"Hello, Alice!\"} — HTTP 200, message addressed to Alice" }
+          "command": "curl -sS -i \"$BASE/hello?name=Alice\"",
+          "exit": 0, "observed": "HTTP 200, body {\"name\":\"Alice\",\"message\":\"Hello, Alice!\"} — message addressed to Alice" }
       ],
       "evidence": {
         "network": [{ "method": "GET", "url": "/hello?name=Alice", "status": 200 }]
@@ -38,14 +38,14 @@
       "outcome": "passed",
       "steps": [
         { "text": "the greeter API is available", "keyword": "Given",
-          "command": "curl -s -o /dev/null -w '%{http_code}' \"$BASE/hello\"",
-          "exit": 0, "observed": "200" },
+          "command": "curl -sS -i \"$BASE/hello\"",
+          "exit": 0, "observed": "HTTP/1.1 200 OK" },
         { "text": "an API Consumer calls GET /hello with no name", "keyword": "When",
-          "command": "curl -s -w '\\nHTTP_STATUS:%{http_code}' \"$BASE/hello\"",
+          "command": "curl -sS -i \"$BASE/hello\"",
           "observed": "no UI exists for this component (API-only service); the request was made directly against the deployed HTTP endpoint named in the validation context" },
         { "text": "the response is a generic JSON greeting", "keyword": "Then",
-          "command": "curl -s \"$BASE/hello\"",
-          "exit": 0, "observed": "{\"message\":\"Hello, World!\"} — HTTP 200, generic greeting, no error" }
+          "command": "curl -sS -i \"$BASE/hello\"",
+          "exit": 0, "observed": "HTTP 200, body {\"message\":\"Hello, World!\"} — generic greeting, no error, no \"name\" field" }
       ],
       "evidence": {
         "network": [{ "method": "GET", "url": "/hello", "status": 200 }]
@@ -61,14 +61,14 @@
       "outcome": "passed",
       "steps": [
         { "text": "the greeter API is available", "keyword": "Given",
-          "command": "curl -s -o /dev/null -w '%{http_code}' \"$BASE/hello\"",
-          "exit": 0, "observed": "200" },
+          "command": "curl -sS -i \"$BASE/hello\"",
+          "exit": 0, "observed": "HTTP/1.1 200 OK" },
         { "text": "an API Consumer calls GET /hello with name \"\"", "keyword": "When",
-          "command": "curl -s -w '\\nHTTP_STATUS:%{http_code}' \"$BASE/hello?name=\"",
+          "command": "curl -sS -i \"$BASE/hello?name=\"",
           "observed": "no UI exists for this component (API-only service); the request was made directly against the deployed HTTP endpoint named in the validation context" },
         { "text": "the response is a generic JSON greeting", "keyword": "Then",
-          "command": "curl -s \"$BASE/hello?name=\"",
-          "exit": 0, "observed": "{\"message\":\"Hello, World!\"} — HTTP 200, generic greeting, no error" }
+          "command": "curl -sS -i \"$BASE/hello?name=\"",
+          "exit": 0, "observed": "HTTP 200, body {\"message\":\"Hello, World!\"} — generic greeting, no error, no \"name\" field" }
       ],
       "evidence": {
         "network": [{ "method": "GET", "url": "/hello?name=", "status": 200 }]
